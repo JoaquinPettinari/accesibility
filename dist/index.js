@@ -1,5 +1,6 @@
 const core = require("@actions/core");
 const pa11y = require("pa11y");
+const puppeteer = require("puppeteer");
 
 async function runPa11y() {
   try {
