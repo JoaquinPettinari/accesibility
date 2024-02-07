@@ -1,22 +1,14 @@
 const core = require("@actions/core");
-const github = require("@actions/github");
+const pa11y = require("pa11y");
 
 function runPa11y(port) {
   const url = `http://localhost:${port}`;
-  try {
-    const response = fetch(url)
-      .then((res) => res.json())
-      .then((res) => console.log(res))
-      .catch(
-        (err) =>
-          new Error(
-            `Failed to fetch ${url}. Status: ${response.status} ${response.statusText}`
-          )
-      );
-  } catch (error) {
-    console.error("Error fetching URL:", error);
-    throw error;
-  }
+  pa11y(url)
+    .then((data) => {
+      core.debug(data);
+      console.log(data);
+    })
+    .catch((error) => core.error(`Error: ${error}`));
 }
 
 try {
@@ -24,9 +16,7 @@ try {
   console.log(`Hello Joaquin your port is: ${port}!`);
   const time = new Date().toTimeString();
   core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2);
-  console.log(`The event payload: ${payload}`);
+
   console.log("Running Pa11y...");
   runPa11y(port);
   console.log("Pa11y completed successfully.");
