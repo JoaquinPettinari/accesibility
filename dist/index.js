@@ -8,7 +8,7 @@ function runPa11y(port) {
       core.debug(data);
       console.log(data);
     })
-    .catch((error) => core.error(`Error: ${error}`));
+    .catch((error) => core.setFailed(`Error: ${error}`));
 }
 
 try {
