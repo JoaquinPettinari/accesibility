@@ -8,6 +8,8 @@ jobs:
   pa11y:
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Accesibility for Argentinas Law
         uses: ./action.yml
         with:
