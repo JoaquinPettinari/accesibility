@@ -10,8 +10,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: List files
-        run: echo ls
       - name: Accesibility for Argentinas Law
         uses: ./
         with:
