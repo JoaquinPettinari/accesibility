@@ -1,14 +1,20 @@
 const core = require("@actions/core");
 const pa11y = require("pa11y");
 
-function runPa11y(port) {
-  const url = `http://localhost:${port}`;
-  pa11y(url)
-    .then((data) => {
-      core.debug(data);
-      console.log(data);
-    })
-    .catch((error) => core.setFailed(`Error: ${error}`));
+async function runPa11y() {
+  try {
+    const browser = await puppeteer.launch({
+      ignoreHTTPSErrors: true,
+    });
+
+    const results = await pa11y(url, {
+      browser: browser,
+    });
+    console.log(results);
+    browser.close();
+  } catch (error) {
+    core.setFailed(error);
+  }
 }
 
 try {
